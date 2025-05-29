@@ -24,7 +24,7 @@ public class Movement : MonoBehaviour
         //Vector3 normalDir = dir.normalized; // 정규화 과정 (0 ~ 1)
 
 
-        Debug.Log($"현재 입력 : {dir}");
+        //Debug.Log($"현재 입력 : {dir}");
 
         transform.position += dir * moveSpeed * Time.deltaTime;
 

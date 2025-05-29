@@ -1,3 +1,6 @@
+# Unity 프로젝트 내 특정 폴더 무시
+Assets/99. Resources/
+
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
