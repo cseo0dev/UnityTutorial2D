@@ -1,20 +1,22 @@
 using UnityEngine;
 
-public class DoorEvent : MonoBehaviour
+public class DoorEvent2 : MonoBehaviour
 {
     private Animator animator;
 
-    private void Start()
+    public string openKey;
+    public string closeKey;
+
+    void Start()
     {
         animator = GetComponent<Animator>();
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            animator.SetTrigger("Open");
+            animator.SetTrigger(openKey);
         }
     }
 
@@ -22,7 +24,7 @@ public class DoorEvent : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            animator.SetTrigger("Close");
+            animator.SetTrigger(closeKey);
         }
     }
 }
