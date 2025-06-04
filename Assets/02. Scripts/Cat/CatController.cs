@@ -1,8 +1,13 @@
 using UnityEngine;
+using Cat;
 
 public class CatController : MonoBehaviour
 {
+    public SoundManager soundManager;
+
     private Rigidbody2D catRb;
+    private Animator catAnim;
+
     public float jumpPower = 10f;
     public bool isGround = false;
 
@@ -11,21 +16,21 @@ public class CatController : MonoBehaviour
     void Start()
     {
         catRb = GetComponent<Rigidbody2D>();
+        catAnim = GetComponent<Animator>();
     }
 
     void Update()
     {
-        // 점프 구현 - 바닥에서 점프할 때만 점프가능(중복 방지)
-        //if (Input.GetKeyDown(KeyCode.Space) && isGround)
-        //{
-        //    catRb.AddForceY(jumpPower, ForceMode2D.Impulse); // Impulse 순간적으로 힘을 가하는 방식
-        //}
-
         // 2단 점프 구현
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 2)
         {
+            catAnim.SetTrigger("Jump");
+            catAnim.SetBool("IsGround", false);
+
             catRb.AddForceY(jumpPower, ForceMode2D.Impulse);
             jumpCount++;
+
+            soundManager.OnJumpSound();
         }
     }
 
@@ -33,6 +38,9 @@ public class CatController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
+            // 점프 중일 때 계속 점프 애니메이션이 작동되도록
+            catAnim.SetBool("IsGround", true);
+
             isGround = true;
             jumpCount = 0;
         }

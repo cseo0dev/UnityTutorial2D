@@ -40,7 +40,7 @@ public class CharacterMovement : MonoBehaviour
     {
         isGround = true;
 
-        renderes[2].gameObject.SetActive(false); // Jumo
+        renderes[2].gameObject.SetActive(false); // Jump
     }
 
     private void OnCollisionExit2D(Collision2D other)
@@ -49,7 +49,7 @@ public class CharacterMovement : MonoBehaviour
 
         renderes[0].gameObject.SetActive(false); // Idle
         renderes[1].gameObject.SetActive(false); // Run
-        renderes[2].gameObject.SetActive(true); // Jumo
+        renderes[2].gameObject.SetActive(true); // Jump
     }
 
     /// <summary>

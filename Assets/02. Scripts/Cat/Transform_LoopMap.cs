@@ -14,7 +14,7 @@ public class Transform_LoopMap : MonoBehaviour
         if (transform.position.x <= -returnPosX)
         {
             // Pipe가 랜덤한 높이에 나타나도록 설정
-            randomPosY = Random.Range(-8f, -2.5f);
+            randomPosY = Random.Range(-4f, -0.5f);
             transform.position = new Vector3(returnPosX, randomPosY, 0.1f);
         }
     }
