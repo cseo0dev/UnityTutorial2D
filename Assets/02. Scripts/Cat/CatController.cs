@@ -9,6 +9,8 @@ public class CatController : MonoBehaviour
     private Animator catAnim;
 
     public float jumpPower = 10f;
+    public float limitPower = 9f;
+
     public bool isGround = false;
 
     public int jumpCount = 0;
@@ -31,6 +33,10 @@ public class CatController : MonoBehaviour
             jumpCount++;
 
             soundManager.OnJumpSound();
+
+            // 점프 높이 제한 (키보드 입력에 따라 점프 높낮이가 달랐던 것을 보완)
+            if(catRb.linearVelocityY > limitPower)
+                catRb.linearVelocityY = limitPower;
         }
     }
 

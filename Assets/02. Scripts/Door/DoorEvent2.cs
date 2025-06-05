@@ -4,6 +4,9 @@ public class DoorEvent2 : MonoBehaviour
 {
     private Animator animator;
 
+    // µµ¾î¶ô
+    public GameObject doorLockUI;
+
     public string openKey;
     public string closeKey;
 
@@ -16,7 +19,8 @@ public class DoorEvent2 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            animator.SetTrigger(openKey);
+            doorLockUI.SetActive(true);
+            // animator.SetTrigger(openKey);
         }
     }
 
@@ -24,7 +28,8 @@ public class DoorEvent2 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            animator.SetTrigger(closeKey);
+            doorLockUI.SetActive(false);
+            // animator.SetTrigger(closeKey);
         }
     }
 }

@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class ColliderEvent : MonoBehaviour
 {
+    public GameObject fadeUI;
+
     // 고양이
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            // 게임 오버 UI
+            fadeUI.SetActive(true);
+
             Debug.Log("Game Over");
         }
     }
