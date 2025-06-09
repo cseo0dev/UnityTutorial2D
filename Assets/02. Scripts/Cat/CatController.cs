@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using Cat;
 
 public class CatController : MonoBehaviour
@@ -23,7 +23,7 @@ public class CatController : MonoBehaviour
 
     void Update()
     {
-        // 2´Ü Á¡ÇÁ ±¸Çö
+        // 2ë‹¨ ì í”„ êµ¬í˜„
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 2)
         {
             catAnim.SetTrigger("Jump");
@@ -34,17 +34,22 @@ public class CatController : MonoBehaviour
 
             soundManager.OnJumpSound();
 
-            // Á¡ÇÁ ³ôÀÌ Á¦ÇÑ (Å°º¸µå ÀÔ·Â¿¡ µû¶ó Á¡ÇÁ ³ô³·ÀÌ°¡ ´Ş¶ú´ø °ÍÀ» º¸¿Ï)
+            // ì í”„ ì†ë„(ë†’ì´) ì œí•œ
             if(catRb.linearVelocityY > limitPower)
                 catRb.linearVelocityY = limitPower;
         }
+
+        // ê³ ì–‘ì´ íšŒì „ êµ¬í˜„
+        var catRotation = transform.eulerAngles;
+        catRotation.z = catRb.linearVelocity.y * 5f;
+        transform.eulerAngles = catRotation;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            // Á¡ÇÁ ÁßÀÏ ¶§ °è¼Ó Á¡ÇÁ ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ÀÛµ¿µÇµµ·Ï
+            // ì í”„ ì¤‘ì¼ ë•Œ ê³„ì† ì í”„ ì• ë‹ˆë©”ì´ì…˜ì´ ì‘ë™ë˜ë„ë¡
             catAnim.SetBool("IsGround", true);
 
             isGround = true;
