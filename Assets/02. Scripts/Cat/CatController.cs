@@ -5,15 +5,19 @@ public class CatController : MonoBehaviour
 {
     public SoundManager soundManager;
 
+    public GameObject gameOverUI;
+    public GameObject fadeUI;
+    public GameObject playUI;
+
+    public GameObject happyVideo;
+    public GameObject sadVideo;
+
     private Rigidbody2D catRb;
     private Animator catAnim;
 
     public float jumpPower = 10f;
-    public float limitPower = 9f;
-
-    public bool isGround = false;
-
     public int jumpCount = 0;
+    public float limitPower = 9f;
 
     void Start()
     {
@@ -23,8 +27,8 @@ public class CatController : MonoBehaviour
 
     void Update()
     {
-        // 2단 점프 구현
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 2)
+        // 점프 횟수 제한
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 10)
         {
             catAnim.SetTrigger("Jump");
             catAnim.SetBool("IsGround", false);
@@ -45,23 +49,72 @@ public class CatController : MonoBehaviour
         transform.eulerAngles = catRotation;
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Fruit"))
+        {
+            // 과일을 먹으면 해당 과일은 화면에서 나타나지 않아야 하므로
+            other.gameObject.SetActive(false);
+
+            // Fruit의 부모 오브젝트로 접근해서 부모의 다른 자식인 particle에 접근 후 활성화
+            other.transform.parent.GetComponent<ItemEvent>().particle.SetActive(true);
+
+            GameManager.score++;
+
+            // 게임 성공
+            if (GameManager.score == 1)
+            {
+                fadeUI.SetActive(true);
+                fadeUI.GetComponent<FadePanel>().OnFade(3f, Color.white);
+
+                this.GetComponent<CircleCollider2D>().enabled = false;
+
+                Invoke("HappyVideo", 5f);
+            }
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
+        // 게임 오버 Game Over (Outro)
+        if (other.gameObject.CompareTag("Pipe"))
+        {
+            soundManager.OnColliderSound();
+            
+            gameOverUI.SetActive(true);
+            fadeUI.SetActive(true);
+            fadeUI.GetComponent<FadePanel>().OnFade(3f, Color.black);
+
+            this.GetComponent<CircleCollider2D>().enabled = false;
+
+            Invoke("SadVideo", 5f);
+        }
+
         if (other.gameObject.CompareTag("Ground"))
         {
             // 점프 중일 때 계속 점프 애니메이션이 작동되도록
             catAnim.SetBool("IsGround", true);
-
-            isGround = true;
             jumpCount = 0;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D other)
+    private void HappyVideo()
     {
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            isGround = false;
-        }
+        happyVideo.SetActive(true);
+        fadeUI.SetActive(false);
+        gameOverUI.SetActive(false);
+        playUI.SetActive(false);
+
+        soundManager.audioSource.mute = true;
+    }
+
+    private void SadVideo()
+    {
+        sadVideo.SetActive(true);
+        fadeUI.SetActive(false);
+        gameOverUI.SetActive(false);
+        playUI.SetActive(false);
+
+        soundManager.audioSource.mute = true;
     }
 }

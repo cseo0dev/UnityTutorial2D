@@ -12,6 +12,8 @@ TagManager:
   - Score30
   - Score50
   - GameOver
+  - Fruit
+  - Pipe
   layers:
   - Default
   - TransparentFX

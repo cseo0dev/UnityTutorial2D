@@ -6,22 +6,24 @@ namespace Cat
     public class SoundManager : MonoBehaviour
     {
         public AudioSource audioSource;
+        public AudioClip introBgmClip;
         public AudioClip jumpClip;
         public AudioClip bgmClip;
+        public AudioClip colliderClip;
 
-        private void Start()
+        public void SetBgmSound(string bgmName)
         {
-            SetBgmSound();
-        }
+            if (bgmName == "Intro")
+            {
+                audioSource.clip = introBgmClip;
+            }
+            else if (bgmName == "Play")
+            {
+                audioSource.clip = bgmClip;
+            }
 
-        // 인스펙터뿐만 아니라 스크립트를 통해서도 오디오 설정 가능
-        public void SetBgmSound()
-        {
-            audioSource.clip = bgmClip;
-            audioSource.playOnAwake = true;
             audioSource.loop = true;
             audioSource.volume = 0.2f;
-
             audioSource.Play();
         }
 
@@ -29,6 +31,12 @@ namespace Cat
         {
             // PlayOneShot = 한번만 실행
             audioSource.PlayOneShot(jumpClip);
+        }
+
+        // 충돌 사운드 구현
+        public void OnColliderSound()
+        {
+            audioSource.PlayOneShot(colliderClip);
         }
     }
 }

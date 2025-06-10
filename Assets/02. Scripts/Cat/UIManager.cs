@@ -6,13 +6,23 @@ namespace Cat
 {
     public class UIManager : MonoBehaviour
     {
+        public SoundManager SoundManager;
+
         public GameObject playObj;
         public GameObject introUI;
+        public GameObject playUI;
 
         public TMP_InputField inputField;
         public TextMeshProUGUI nameTextUI;
 
         public Button startButton;
+
+        void Awake()
+        {
+            playObj.SetActive(false);
+            introUI.SetActive(true);
+            playUI.SetActive(false);
+        }
 
         void Start()
         {
@@ -31,12 +41,14 @@ namespace Cat
             }
             else
             {
-                playObj.SetActive(true);
-                introUI.SetActive(false);
-
-                // startButton.interactable = true;
-                Debug.Log($"{nameTextUI.text} 입력");
                 nameTextUI.text = inputField.text;
+                SoundManager.SetBgmSound("Play");
+
+                GameManager.isPlay = true; // true가 되면 타이머 시작
+
+                playObj.SetActive(true);
+                playUI.SetActive(true);
+                introUI.SetActive(false);
             }
         }
     }
