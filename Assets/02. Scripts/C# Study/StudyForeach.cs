@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-using UnityEditor.Build;
 using UnityEngine;
 
 public class StudyForeach : MonoBehaviour
