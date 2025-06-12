@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemEvent : MonoBehaviour
@@ -13,10 +14,17 @@ public class ItemEvent : MonoBehaviour
     public float returnPosX = 15f;
     public float randomPosY;
 
-    void Start()
+    private Vector3 initPos;
+
+    void Awake()
     {
-        SetRandomSetting(transform.position.x);
+        initPos = transform.localPosition;
     }
+    void OnEnable()
+    {
+        SetRandomSetting(initPos.x);
+    }
+
 
     void Update()
     {

@@ -11,11 +11,13 @@ namespace Cat
         public GameObject playObj;
         public GameObject introUI;
         public GameObject playUI;
+        public GameObject videoPanel;
 
         public TMP_InputField inputField;
         public TextMeshProUGUI nameTextUI;
 
         public Button startButton;
+        public Button reStartButton;
 
         void Awake()
         {
@@ -28,6 +30,7 @@ namespace Cat
         {
             // 유니티 인스펙터 창에서 넣지 않고 코드로 넣어주는 방법
             startButton.onClick.AddListener(OnStartButton);
+            reStartButton.onClick.AddListener(OnRestartButton);
         }
 
         public void OnStartButton()
@@ -50,6 +53,13 @@ namespace Cat
                 playUI.SetActive(true);
                 introUI.SetActive(false);
             }
+        }
+
+        public void OnRestartButton()
+        {
+            GameManager.ResetPlayUI();
+            playObj.SetActive(true);
+            videoPanel.SetActive(false);
         }
     }
 }

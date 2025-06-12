@@ -19,10 +19,18 @@ public class CatController : MonoBehaviour
     public int jumpCount = 0;
     public float limitPower = 9f;
 
-    void Start()
+    void Awake()
     {
         catRb = GetComponent<Rigidbody2D>();
         catAnim = GetComponent<Animator>();
+    }
+
+    // 켜질 때마다 1번씩 실행
+    void OnEnable()
+    {
+        transform.localPosition = new Vector3(-5.58599854f, -2.04101563f, 0.159999996f);
+        GetComponent<CircleCollider2D>().enabled = true;
+        soundManager.audioSource.mute = false;
     }
 
     void Update()
@@ -65,7 +73,7 @@ public class CatController : MonoBehaviour
             if (GameManager.score == 5)
             {
                 fadeUI.SetActive(true);
-                fadeUI.GetComponent<FadePanel>().OnFade(3f, Color.white);
+                fadeUI.GetComponent<FadePanel>().OnFade(3f, Color.white, true);
 
                 this.GetComponent<CircleCollider2D>().enabled = false;
                 StartCoroutine(EndigRoutine(true));
@@ -82,7 +90,7 @@ public class CatController : MonoBehaviour
             
             gameOverUI.SetActive(true);
             fadeUI.SetActive(true);
-            fadeUI.GetComponent<FadePanel>().OnFade(3f, Color.black);
+            fadeUI.GetComponent<FadePanel>().OnFade(3f, Color.black, true);
 
             this.GetComponent<CircleCollider2D>().enabled = false;
             StartCoroutine(EndigRoutine(false));
@@ -99,13 +107,18 @@ public class CatController : MonoBehaviour
     IEnumerator EndigRoutine(bool isHappy)
     {
         yield return new WaitForSeconds(3.5f);
+
         videoManager.VideoPlay(isHappy);
+        yield return new WaitForSeconds(1f);
 
-        // bool 값이 true가 될 때까지 대기
-        // yield return new WaitUntil(() => videoManager.vPlayer.isPlaying);
+        var newColor = isHappy ? Color.white : Color.black;
+        fadeUI.GetComponent<FadePanel>().OnFade(3f, newColor, false);
 
+        yield return new WaitForSeconds(3f);
         fadeUI.SetActive(false);
         gameOverUI.SetActive(false);
         soundManager.audioSource.mute = true;
+
+        transform.parent.gameObject.SetActive(false); // PLAY 오브젝트 OFF
     }
 }
