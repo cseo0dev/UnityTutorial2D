@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Orc : Monster
+public interface IAttack
 {
     
 }
