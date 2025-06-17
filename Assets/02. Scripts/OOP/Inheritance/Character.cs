@@ -4,6 +4,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public IDropItem currentItem;
+    [SerializeField] private Transform grabPos;
 
     private void Update()
     {
@@ -24,7 +25,7 @@ public class Character : MonoBehaviour
         {
             IDropItem item = other.GetComponent<IDropItem>();
             
-            item.Grab(); // æ∆¿Ã≈€ »πµÊ
+            item.Grab(grabPos); // æ∆¿Ã≈€ »πµÊ
 
             currentItem = item; // æ∆¿Ã≈€ ¿Â¬¯
         }

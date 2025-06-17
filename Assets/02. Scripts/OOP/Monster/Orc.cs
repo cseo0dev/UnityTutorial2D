@@ -15,8 +15,8 @@ public class Orc : Monster, IMove
         Debug.Log("АјАн");
     }
 
-    public override void SetHealth()
+    public override void Init()
     {
-        hp = 100f;
+        
     }
 }
