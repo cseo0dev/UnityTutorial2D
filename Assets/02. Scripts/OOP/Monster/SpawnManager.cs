@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class SpawnManager : MonoBehaviour
     // [SerializeField] private GameObject coinPrefab;
     // 코인 구현 (여러개)
     [SerializeField] private GameObject[] items;
+
+    private List<Monster> monsterList = new List<Monster>();
 
     // 3초마다 몬스터를 랜덤으로 생성하는 기능
     IEnumerator Start()
@@ -26,7 +29,15 @@ public class SpawnManager : MonoBehaviour
             var randomY = Random.Range(-3, 5);
             var createPos = new Vector3(randomX, randomY, 0);
 
-            Instantiate(monsters[randomIndex], createPos, Quaternion.identity); // 몬스터 생성 -> 원점에 생성
+            GameObject monster = Instantiate(monsters[randomIndex], createPos, Quaternion.identity); // 몬스터 생성 -> 원점에 생성
+            
+            //monsterList.Add(monster.GetComponent<Monster>());
+            //Debug.Log($"현재 몬스터 수 : {monsterList.Count}");
+
+            int ranDir = Random.Range(0, 2) > 0 ? 1 : -1;
+            
+            monster.GetComponent<Monster>().Dir = ranDir;
+            monster.GetComponent<Monster>().SetFlip(ranDir);
         }
     }
 
@@ -41,6 +52,7 @@ public class SpawnManager : MonoBehaviour
         Rigidbody2D itemRb = item.GetComponent<Rigidbody2D>();
         itemRb.AddForceX(Random.Range(-2f, 2f), ForceMode2D.Impulse);
         itemRb.AddForceY(3f, ForceMode2D.Impulse);
+        //itemRb.AddForce(new Vector2(Random.Range(-2f, 2f), 3f), ForceMode2D.Impulse);
 
         // 아이템 뿌리기 - 회전 구현
         float ranPower = Random.Range(-1.5f, 1.5f);

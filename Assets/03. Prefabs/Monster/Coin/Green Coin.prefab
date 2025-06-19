@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7978665374338446125}
   - component: {fileID: 8991926548426747518}
   - component: {fileID: 6068178053356671481}
+  - component: {fileID: -5427418280568835494}
   m_Layer: 6
   m_Name: Green Coin
   m_TagString: Untagged
@@ -152,3 +153,16 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.225}
   m_Radius: 0.225
+--- !u!114 &-5427418280568835494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753214078435546469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d2e924981ded4b4595daa9c0f2c3e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potionType: 0

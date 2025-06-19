@@ -14,13 +14,19 @@ public abstract class Monster : MonoBehaviour
 
     // 화면 끝까지 가면 방향을 바꾸기 위한 값
     private int dir = 1;
+    public int Dir
+    {
+        get { return dir; }
+        set { dir = value; }
+    }
+
     // 공격할 때에는 움직이지 않도록 하기 위해 선언한 값
     private bool isMove = true;
     private bool isHit = false;
 
     public abstract void Init();
 
-    void Start()
+    void Awake()
     {
         spawner = FindFirstObjectByType<SpawnManager>();
 
@@ -49,18 +55,22 @@ public abstract class Monster : MonoBehaviour
         transform.position += Vector3.right * dir * moveSpeed * Time.deltaTime;
 
         if (transform.position.x > 8f)
-        {
             dir = -1;
-            sRenderer.flipX = true;
-        }
         else if (transform.position.x < -8f)
-        {
             dir = 1;
-            sRenderer.flipX = false;
-        }
+
+        SetFlip(dir);
     }
 
-    IEnumerator Hit(float damage)
+    public void SetFlip(int dir)
+    {
+        if (dir > 0)
+            sRenderer.flipX = false;
+        else
+            sRenderer.flipX = true;
+    }
+
+    public IEnumerator Hit(float damage)
     {
         if (isHit)
             yield break;

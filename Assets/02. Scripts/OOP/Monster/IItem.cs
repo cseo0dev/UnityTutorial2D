@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public class IItem : MonoBehaviour
+public interface IItem
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    GameObject Obj { get; set; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // 모든 아이템은 획득이 가능해야함
+    void Get();
 }
