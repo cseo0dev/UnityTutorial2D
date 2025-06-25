@@ -13,6 +13,8 @@ public class KnightController_Joystick : MonoBehaviour
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float jumpPower = 13f;
 
+    private float atkDamage = 3f;
+
     // bool 기본값 = false
     private bool isGround;
     private bool isAttack;
@@ -25,11 +27,6 @@ public class KnightController_Joystick : MonoBehaviour
 
         jumpButton.onClick.AddListener(Jump);
         attackButton.onClick.AddListener(Attack);
-    }
-
-    void Update()
-    {
-        
     }
 
     void FixedUpdate()
@@ -46,12 +43,20 @@ public class KnightController_Joystick : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D other)
+    void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
             animator.SetBool("[Bool] IsGround", false);
             isGround = false;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Monster"))
+        {
+            Debug.Log($"{atkDamage} 데미지로 공격");
         }
     }
 
@@ -90,8 +95,8 @@ public class KnightController_Joystick : MonoBehaviour
     {
         if (!isAttack)
         {
-            // 콤보 체크용
             isAttack = true;
+            atkDamage = 3f;
             animator.SetTrigger("[Trigger] Attack");
         }
         else
@@ -101,7 +106,10 @@ public class KnightController_Joystick : MonoBehaviour
     public void CheckCombo()
     {
         if (isCombo)
+        {
+            atkDamage = 5f;
             animator.SetBool("[Bool] IsCombo", true);
+        }
         else
         {
             animator.SetBool("[Bool] IsCombo", false);
