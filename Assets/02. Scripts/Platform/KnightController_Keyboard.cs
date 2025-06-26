@@ -77,7 +77,7 @@ public class KnightController_Keyboard : MonoBehaviour
             var scaleX = inputDir.x > 0 ? 1 : -1;
             transform.localScale = new Vector3(scaleX, 1, 1);
 
-            knightRb.linearVelocityX = inputDir.x * moveSpeed;
+            knightRb.linearVelocity = inputDir * moveSpeed;
         }
     }
 
