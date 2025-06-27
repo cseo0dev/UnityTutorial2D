@@ -6,6 +6,8 @@ public class InteractionEvent : MonoBehaviour
     public enum InteractionType { SIGN, DOOR, NPC}
     public InteractionType type;
 
+    public SoundController soundController;
+
     public GameObject popUp;
 
     public PlatformFade fade;
@@ -25,6 +27,7 @@ public class InteractionEvent : MonoBehaviour
             Interaction(other.transform);
         }
     }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -53,6 +56,8 @@ public class InteractionEvent : MonoBehaviour
 
     IEnumerator DoorRoutine(Transform player)
     {
+        soundController.EventSoundPlay("Door Open");
+
         yield return StartCoroutine(fade.Fade(3f, Color.black, true));
 
         map.SetActive(isHouse);
@@ -62,6 +67,8 @@ public class InteractionEvent : MonoBehaviour
         player.transform.position = pos;
 
         isHouse = !isHouse;
+
+        soundController.EventSoundPlay("Door Close");
 
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(fade.Fade(3f, Color.black, false));
