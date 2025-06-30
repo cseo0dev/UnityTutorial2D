@@ -14,6 +14,7 @@ public class KnightController_Keyboard : MonoBehaviour
     private bool isGround;
     private bool isAttack;
     private bool isCombo;
+    private bool isLadder;
 
     void Start()
     {
@@ -57,6 +58,24 @@ public class KnightController_Keyboard : MonoBehaviour
         {
             Debug.Log($"{atkDamage} 데미지로 공격");
         }
+        
+        if (other.CompareTag("Ladder"))
+        {
+            isLadder = true;
+            // 물리적인 값이 남아있을 수 있으므로 초기화
+            knightRb.gravityScale = 0f; // 사다리에서는 중력으로 인한 떨어짐이 없어야 함
+            knightRb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            isLadder = false;
+            knightRb.gravityScale = 2f;
+            knightRb.linearVelocity = Vector2.zero;
+        }
     }
 
     void InputKeyboard()
@@ -68,6 +87,13 @@ public class KnightController_Keyboard : MonoBehaviour
         // 애니메이터 파라미터에 값 전달 => 애니메이션 동작
         animator.SetFloat("[Float] JoystickX", inputDir.x);
         animator.SetFloat("[Float] JoystickY", inputDir.y);
+
+        // 몸을 숙였을 때 콜라이더 값 변환
+        if (inputDir.y < 0)
+            GetComponent<CapsuleCollider2D>().size = new Vector2(0.5f, 0.3f);
+        else
+            GetComponent<CapsuleCollider2D>().size = new Vector2(0.5f, 1f);
+
     }
 
     void Move()
@@ -77,8 +103,9 @@ public class KnightController_Keyboard : MonoBehaviour
             var scaleX = inputDir.x > 0 ? 1 : -1;
             transform.localScale = new Vector3(scaleX, 1, 1);
 
-            knightRb.linearVelocity = inputDir * moveSpeed;
+            knightRb.linearVelocityX = inputDir.x * moveSpeed;
         }
+
     }
 
     void Jump()
