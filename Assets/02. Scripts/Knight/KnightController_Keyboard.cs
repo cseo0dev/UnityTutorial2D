@@ -106,6 +106,10 @@ public class KnightController_Keyboard : MonoBehaviour
             knightRb.linearVelocityX = inputDir.x * moveSpeed;
         }
 
+        if (isLadder && inputDir.y != 0)
+        {
+            knightRb.linearVelocityY = inputDir.y * moveSpeed;
+        }
     }
 
     void Jump()

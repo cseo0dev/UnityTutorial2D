@@ -15,6 +15,7 @@ TagManager:
   - Fruit
   - Pipe
   - Ladder
+  - Return
   layers:
   - Default
   - TransparentFX
