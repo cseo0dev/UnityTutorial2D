@@ -1,30 +1,40 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public abstract class MonsterCore : MonoBehaviour
+public abstract class MonsterCore : MonoBehaviour, IDamageable
 {
     public enum MonsterState { IDLE, PATROL, TRACE, ATTACK }
     public MonsterState monsterState = MonsterState.IDLE; // 안 적어도 IDLE(가장 앞)이 기본값
 
+    public ItemManager itemManager;
+
+    public Transform target;
     protected Animator animator;
     protected Rigidbody2D monsterRb;
     protected Collider2D monsterColl;
-
-    public Transform target;
+    public Image hpBar;
 
     public float hp;
+    public float currHp;
+
     public float speed;
     public float attackTime;
+    public float atkDamage;
 
     protected float moveDir;
     protected float targetDist;
 
     protected bool isTrace;
+    private bool isDead;
 
-    protected virtual void Init(float hp, float speed, float attackTime)
+    protected virtual void Init(float hp, float speed, float attackTime, float atkDamage)
     {
         this.hp = hp;
         this.speed = speed;
         this.attackTime = attackTime;
+        this.atkDamage = atkDamage;
+
+        itemManager = FindFirstObjectByType<ItemManager>();
 
         target = GameObject.FindGameObjectWithTag("Player").transform; // 태그가 적을 경우 사용
         // target = FindFirstObjectByType<KnightController_Keyboard>().transform; // 일반적으로 찾는 방법
@@ -32,18 +42,15 @@ public abstract class MonsterCore : MonoBehaviour
         animator = GetComponent<Animator>();
         monsterRb = GetComponent<Rigidbody2D>();
         monsterColl = GetComponent<Collider2D>();
+
+        currHp = hp;
+        hpBar.fillAmount = currHp / hp;
     }
 
     void Update()
     {
-        targetDist = Vector3.Distance(transform.position, target.position);
-
-        Vector3 monsterDir = Vector3.right * moveDir; // 몬스터가 바라보는 방향
-        Vector3 playerDir = (transform.position - target.position).normalized; // 플레이어가 몬스터를 바라보는 방향
-
-        float dotValue = Vector3.Dot(monsterDir, playerDir);
-        isTrace = dotValue < -0.5f && dotValue >= -1f;
-        //isTrace = Vector3.Dot(monsterDir, playerDir) < 0; // 0보다 작으면 서로 마주보고 있는 상태
+        if (isDead)
+            return;
 
         switch (monsterState)
         {
@@ -69,6 +76,11 @@ public abstract class MonsterCore : MonoBehaviour
             moveDir *= -1;
             transform.localScale = new Vector3(moveDir, 1, 1);
         }
+
+        if (other.GetComponent<IDamageable>() != null)
+        {
+            other.GetComponent<IDamageable>().TakeDamage(atkDamage);
+        }
     }
 
     public abstract void Idle();
@@ -80,5 +92,25 @@ public abstract class MonsterCore : MonoBehaviour
     {
         if (monsterState != newState) // 몬스터 State가 새로 설정하는 State와 다를경우
             monsterState = newState;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currHp -= damage;
+
+        hpBar.fillAmount = currHp / hp;
+
+        if (currHp <= 0f)
+            Death();
+    }
+
+    public void Death()
+    {
+        isDead = true;
+        animator.SetTrigger("[Trigger] Death");
+        monsterColl.enabled = false; // 계속 공격하기 때문에 콜라이더를 꺼버림
+        monsterRb.gravityScale = 0f; // 콜라이더를 해제해주었기 때문에 중력때문에 떨어짐 -> 중력을 0으로 설정
+
+        itemManager.DropItem(transform.position);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,13 +48,30 @@ namespace Cat
                 nameTextUI.text = inputField.text;
                 SoundManager.SetBgmSound("Play");
 
-                GameManager.isPlay = true; // true가 되면 타이머 시작
+                // GameManager.isPlay = true; // true가 되면 타이머 시작
 
-                playObj.SetActive(true);
-                playUI.SetActive(true);
+                //playObj.SetActive(true);
+                //playUI.SetActive(true);
+                //introUI.SetActive(false);
+
                 introUI.SetActive(false);
+                StartCoroutine(PlayStartWithTutorial());
             }
         }
+
+        public GameObject tutorialUI;
+        public TutorialTextTyper tutorialTyper;
+
+        IEnumerator PlayStartWithTutorial()
+        {
+            tutorialUI.SetActive(true);
+            yield return StartCoroutine(tutorialTyper.StartTyping());
+            tutorialUI.SetActive(false);
+            playObj.SetActive(true);
+            playUI.SetActive(true);
+            GameManager.isPlay = true;
+        }
+
 
         public void OnRestartButton()
         {
