@@ -111,6 +111,14 @@ public abstract class MonsterCore : MonoBehaviour, IDamageable
         monsterColl.enabled = false; // 계속 공격하기 때문에 콜라이더를 꺼버림
         monsterRb.gravityScale = 0f; // 콜라이더를 해제해주었기 때문에 중력때문에 떨어짐 -> 중력을 0으로 설정
 
-        itemManager.DropItem(transform.position);
+        // 아이템 드롭 개수 (0 ~ 2)
+        int itemCount = Random.Range(1, 3);
+        if (itemCount > 0)
+        {
+            for (int i = 0; i < itemCount; i++)
+            {
+                itemManager.DropItem(transform.position);
+            }
+        }
     }
 }

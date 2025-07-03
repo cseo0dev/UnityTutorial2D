@@ -39,7 +39,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: '[Collider] Atk'
+    path: '[Coll] Attack'
   m_ScaleCurves:
   - curve:
       serializedVersion: 2
@@ -65,7 +65,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: '[Collider] Atk'
+    path: '[Coll] Attack'
   m_FloatCurves:
   - serializedVersion: 2
     curve:
@@ -102,7 +102,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: '[Collider] Atk'
+    path: '[Coll] Attack'
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -134,7 +134,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 3385030157
+      path: 3831105989
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -143,7 +143,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3385030157
+      path: 3831105989
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -152,7 +152,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 3385030157
+      path: 3831105989
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -203,45 +203,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.16666667
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.41666666
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: '[Collider] Atk'
-    classID: 1
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
         value: 1.1951
         inSlope: 0
         outSlope: 0
@@ -262,7 +223,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: '[Collider] Atk'
+    path: '[Coll] Attack'
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -292,7 +253,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: '[Collider] Atk'
+    path: '[Coll] Attack'
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -322,7 +283,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: '[Collider] Atk'
+    path: '[Coll] Attack'
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -352,7 +313,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.x
-    path: '[Collider] Atk'
+    path: '[Coll] Attack'
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -382,7 +343,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: '[Collider] Atk'
+    path: '[Coll] Attack'
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -412,8 +373,47 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.z
-    path: '[Collider] Atk'
+    path: '[Coll] Attack'
     classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.16666667
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.41666666
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_IsActive
+    path: '[Coll] Attack'
+    classID: 1
     script: {fileID: 0}
     flags: 0
   m_EulerEditorCurves: []
